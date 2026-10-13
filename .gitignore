@@ -3,4 +3,4 @@ data/
 .venv/
 __pycache__/
 *.pyc
-EOF
+EOFcheckpoints/zoo_*.pth
