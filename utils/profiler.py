@@ -240,7 +240,7 @@ def compare_model_complexities(
     rows = []
 
     for name, model in models_dict.items():
-        profiler = ModelProfiler(model, input_size=input_size, device=device)
+        profiler = ModelProfiler(model, input_size=input_size, device="cpu")
         latency, throughput = benchmark_inference(model, input_size=input_size, device=device, reps=50, warmup=10)
         rows.append([
             name,
