@@ -69,3 +69,27 @@ def plot_ablation_summary(
     plt.savefig(save_path, dpi=200)
     plt.close()
     print(f"Master ablation summary plot saved to: {save_path}")
+
+
+if __name__ == "__main__":
+    import argparse
+    import json
+
+    parser = argparse.ArgumentParser(description="ELEC 475 Lab 2 - Visualization Utilities")
+    parser.add_argument("--plot-ablation", action="store_true",
+                        help="Plot per-epoch validation accuracy for every run in --results")
+    parser.add_argument("--results", type=str, default="./plots/ablation_results.json",
+                        help="JSON file mapping model label -> {\"val_accs\": [...]}")
+    parser.add_argument("--save-path", type=str, default="./plots/ablation_summary.png")
+    args = parser.parse_args()
+
+    if not args.plot_ablation:
+        parser.print_help()
+    else:
+        with open(args.results) as f:
+            results = json.load(f)
+        # Skip runs whose accuracies have not been filled in yet
+        results = {label: data for label, data in results.items() if data.get("val_accs")}
+        if not results:
+            raise SystemExit(f"No val_accs found in {args.results} - fill in the per-epoch values first.")
+        plot_ablation_summary(results, save_path=args.save_path)
