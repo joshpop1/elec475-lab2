@@ -76,3 +76,4 @@ python train.py --model alexnet --norm lrn  --dataset tiny_imagenet --epochs 10 
 # Step 5: Complexity benchmark 
 # ---------------------------------------------------------------------------
 python compare_models.py --dataset cifar10
+python -m utils.visualization --plot-ablation
